@@ -46,7 +46,10 @@ def post_form():
 
     global players
     global game_state
-    players = [request.form["name"]]
+    players = {}
+    playername = request.form["name"]
+    player_color = request.form["color"]
+    players[playername] = player_color
     game_state = {
         "board": [[" " for _ in range(7)] for _ in range(6)],
         "currentPlayer": "R",

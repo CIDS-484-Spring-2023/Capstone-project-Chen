@@ -1,5 +1,6 @@
 var playerRed ="R";
 var playerYellow = "Y";
+
 /*
 let gameState = {
     board: [],
@@ -32,7 +33,18 @@ function setGame() {
     }
 }
 async function setPiece(){
+    var currentPlayer = currentPlayer
     console.log(gameState)
+    if(document.getElementById("red").checked){
+        if(gameState.currentPlayer != playerRed){
+            return;
+        }
+    }
+    if(document.getElementById("yellow").checked){
+        if(gameState.currentPlayer != playerYellow) {
+            return;
+        }
+    }
     if(gameState.gameOver){
         return;
     }

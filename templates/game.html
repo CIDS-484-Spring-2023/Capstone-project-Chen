@@ -13,10 +13,16 @@
         
     </head>
     <body>
+    <form>
+        <input type ="radio" id = "red" name = "color">
+        <label for="red">Red</label>
+        <input type = "radio" id = "yellow" name = "color">
+        <label for="yellow">Yellow</label>
         <h1>Connect 4</h1>
+    </form>
         <ul>
-            {% for player in players %}
-                <li> {{ player }} </li>
+            {% for (name) in players %}
+                <li> {{ name }}: </li>
             {% endfor %}
         </ul>
         <h2 id="winner"></h2>

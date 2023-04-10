@@ -1,5 +1,6 @@
 import json
 import string
+from pprint import pp
 from flask import Flask
 from flask import render_template
 from flask import redirect
@@ -8,7 +9,7 @@ import random
 
 app = Flask(__name__)
 # current_lobies = {}
-players = []
+players = {}
 game_state = {
     "board": [[" " for _ in range(7)] for _ in range(6)],
     "currentPlayer": "R",
@@ -22,9 +23,9 @@ def hellowoirld():
     return "<h1> hellow world!!!</h1>"
 
 
-@app.get("/game")
-def single_game():
-    return render_template("game.html", players=players, game_state=game_state)
+@app.get("/game/<name>")
+def single_game(name):
+    return render_template("game.html", name=name, players=players, game_state=game_state)
 
 
 @app.post("/game")
@@ -46,7 +47,7 @@ def post_form():
 
     global players
     global game_state
-    players = {}
+    pp(dict(request.form))
     playername = request.form["name"]
     player_color = request.form["color"]
     players[playername] = player_color
@@ -56,4 +57,4 @@ def post_form():
         "gameOver": False,
         "currentColumns": [5, 5, 5, 5, 5, 5],
     }
-    return redirect(url_for("single_game"))
+    return redirect(url_for("single_game", name=playername))

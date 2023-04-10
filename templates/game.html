@@ -6,23 +6,19 @@
         <title>Connect 4</title>
 
         <script>
-            var gameState = ({{ game_state|tojson }});
+            var GAMESTATE = ({{ game_state|tojson }});
+            var NAME = ({{name|tojson}});
+            var COLOR = ({{ players[name]|tojson }});
         </script>
         <link rel="stylesheet" href="/static/connect4.css">
         <script src="/static/connect4.js"></script>
         
     </head>
     <body>
-    <form>
-        <input type ="radio" id = "red" name = "color">
-        <label for="red">Red</label>
-        <input type = "radio" id = "yellow" name = "color">
-        <label for="yellow">Yellow</label>
         <h1>Connect 4</h1>
-    </form>
         <ul>
-            {% for (name) in players %}
-                <li> {{ name }}: </li>
+            {% for (name,color) in players.items() %}
+                <li> {{ name }}: {{color}}</li>
             {% endfor %}
         </ul>
         <h2 id="winner"></h2>

@@ -2,7 +2,7 @@ var playerRed ="R";
 var playerYellow = "Y";
 
 /*
-let gameState = {
+let GAMESTATE = {
     board: [],
     currentPlayer: playerRed,
     gameOver: false,
@@ -23,9 +23,9 @@ function setGame() {
             tile.id = r.toString() + "-" + c.toString();
             tile.classList.add("tile");
             tile.addEventListener("click",setPiece);
-            if (gameState.board[r][c] == "R") {
+            if (GAMESTATE.board[r][c] == "R") {
                 tile.classList.add("red-piece");
-            } else if (gameState.board[r][c] == "Y") {
+            } else if (GAMESTATE.board[r][c] == "Y") {
                 tile.classList.add("yellow-piece");
             }
             document.getElementById("board").append(tile);
@@ -34,18 +34,11 @@ function setGame() {
 }
 async function setPiece(){
     var currentPlayer = currentPlayer
-    console.log(gameState)
-    if(document.getElementById("red").checked){
-        if(gameState.currentPlayer != playerRed){
-            return;
-        }
+    console.log(GAMESTATE)
+    if(GAMESTATE.currentPlayer != COLOR){
+        return;
     }
-    if(document.getElementById("yellow").checked){
-        if(gameState.currentPlayer != playerYellow) {
-            return;
-        }
-    }
-    if(gameState.gameOver){
+    if(GAMESTATE.gameOver){
         return;
     }
 
@@ -53,35 +46,35 @@ async function setPiece(){
     let r =parseInt(coords[0]);
     let c =parseInt(coords[1]);
     
-    r = gameState.currentColumns[c];
+    r = GAMESTATE.currentColumns[c];
     if(r<0){
         return;
     }
-    gameState.board[r][c] = gameState.currentPlayer;
+    GAMESTATE.board[r][c] = GAMESTATE.currentPlayer;
     let tile = document.getElementById(r.toString() +"-" + c.toString());
-    if(gameState.currentPlayer == playerRed) {
+    if(GAMESTATE.currentPlayer == playerRed) {
         tile.classList.add("red-piece");
-        gameState.currentPlayer = playerYellow;
+        GAMESTATE.currentPlayer = playerYellow;
     }
     else{
         tile.classList.add("yellow-piece");
-        gameState.currentPlayer = playerRed;
+        GAMESTATE.currentPlayer = playerRed;
     }
     r-=1;
-    gameState.currentColumns[c] = r;
+    GAMESTATE.currentColumns[c] = r;
 
     checkWinner();
-    await fetch(window.location.href, { method: "POST",
-                                        headers: {"Content-Type": "application/json"},
-                                        body: JSON.stringify(gameState)})
+    await fetch("/game", {  method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify(GAMESTATE)})
 }
 
 function checkWinner(){
     //horizontallly
     for(let r=0; r<number_rows; r++){
         for(let c=0; c<number_columns-3;c++){
-            if(gameState.board[r][c]==gameState.board[r][c+1] && gameState.board[r][c+1]==gameState.board[r][c+2] && gameState.board[r][c+2] == gameState.board[r][c+3]){
-                if(gameState.board[r][c] != ' '){
+            if(GAMESTATE.board[r][c]==GAMESTATE.board[r][c+1] && GAMESTATE.board[r][c+1]==GAMESTATE.board[r][c+2] && GAMESTATE.board[r][c+2] == GAMESTATE.board[r][c+3]){
+                if(GAMESTATE.board[r][c] != ' '){
                     setWinner(r,c);
                     return;
                 }
@@ -91,8 +84,8 @@ function checkWinner(){
     //vertically
     for(let c=0; c<number_columns;c++){
         for(let r=0; r<number_rows-3; r++){
-            if(gameState.board[r][c]==gameState.board[r+1][c] && gameState.board[r+1][c]==gameState.board[r+2][c] && gameState.board[r+2][c] == gameState.board[r+3][c]){
-                if(gameState.board[r][c] != ' '){
+            if(GAMESTATE.board[r][c]==GAMESTATE.board[r+1][c] && GAMESTATE.board[r+1][c]==GAMESTATE.board[r+2][c] && GAMESTATE.board[r+2][c] == GAMESTATE.board[r+3][c]){
+                if(GAMESTATE.board[r][c] != ' '){
                     setWinner(r,c);
                     return;
                 }
@@ -102,8 +95,8 @@ function checkWinner(){
     //diagonally
     for(let c=0; c<number_columns-3;c++){
         for(let r=0; r<number_rows-3; r++){
-            if(gameState.board[r][c]==gameState.board[r+1][c+1] && gameState.board[r+1][c+1]==gameState.board[r+2][c+2] && gameState.board[r+2][c+2] == gameState.board[r+3][c]){
-                if(gameState.board[r][c] != ' '){
+            if(GAMESTATE.board[r][c]==GAMESTATE.board[r+1][c+1] && GAMESTATE.board[r+1][c+1]==GAMESTATE.board[r+2][c+2] && GAMESTATE.board[r+2][c+2] == GAMESTATE.board[r+3][c]){
+                if(GAMESTATE.board[r][c] != ' '){
                     setWinner(r,c);
                     return;
                 }
@@ -113,7 +106,7 @@ function checkWinner(){
 }
 function setWinner(r,c) {
     let winner = document.getElementById("winner");
-    if(gameState.board[r][c] == playerRed){
+    if(GAMESTATE.board[r][c] == playerRed){
         winner.innerText = "Red Wins";
     }
     else{

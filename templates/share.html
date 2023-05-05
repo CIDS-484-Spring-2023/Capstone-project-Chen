@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<form action ="/lobby" method ="POST">
+<form action="/lobby" method="POST">
+    <h1>join</h1>
+    <ul>
+        {% for (name,color) in players.items() %}
+            <li> {{ name }}: {{color}}</li>
+        {% endfor %}
+    </ul>
     <label for="name">Name:</label>
     <input type ="text" name="name"><br><br>
     <label for="room">Room:</label>
-    <input type = "text" name = "room"><br>
+    <input type = "text" name = "room" value="{{roomid}}"><br>
     <label for="color">Color: </label>
     <label for ="red">Red</label>
     <input type ="radio" id = "color1" name ="color" value = "R">
     <label for ="yellow"> Yellow</label>
     <input type = "radio" id = "color2" name = "color" value = "Y"><br>
     <input type ="submit" value="Submit">
-
 </form>
-

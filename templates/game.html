@@ -7,7 +7,6 @@
 
         <script>
             var GAMESTATE = ({{ game_state|tojson }});
-            var NAME = ({{name|tojson}});
             var COLOR = ({{ players[name]|tojson }});
         </script>
         <link rel="stylesheet" href="/static/connect4.css">
@@ -16,6 +15,7 @@
     </head>
     <body>
         <h1>Connect 4</h1>
+        <a href="/share/{{roomid}}">share link</a>
         <ul>
             {% for (name,color) in players.items() %}
                 <li> {{ name }}: {{color}}</li>

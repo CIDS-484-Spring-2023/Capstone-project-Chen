@@ -64,7 +64,7 @@ async function setPiece(){
     GAMESTATE.currentColumns[c] = r;
 
     checkWinner();
-    await fetch("/game", {  method: "POST",
+    await fetch(window.location.toString(), {  method: "POST",
                             headers: {"Content-Type": "application/json"},
                             body: JSON.stringify(GAMESTATE)})
 }
